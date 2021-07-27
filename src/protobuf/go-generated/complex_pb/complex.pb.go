@@ -4,7 +4,7 @@
 // 	protoc        v3.17.3
 // source: protobuf/complex/complex.proto
 
-package complex
+package complex_pb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"

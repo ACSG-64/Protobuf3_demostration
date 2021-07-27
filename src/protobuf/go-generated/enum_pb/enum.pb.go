@@ -4,7 +4,7 @@
 // 	protoc        v3.17.3
 // source: protobuf/enum/enum.proto
 
-package enum
+package enum_pb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"

@@ -4,7 +4,7 @@
 // 	protoc        v3.17.3
 // source: simple/simple.proto
 
-package simple
+package simple_pb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
