@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
-	simple_msg "github.com/ACSG-64/Protobuf3_demostration/src/simple.msg"
+	complex2 "github.com/ACSG-64/Protobuf3_demostration/src/protobuf/complex"
+	"github.com/ACSG-64/Protobuf3_demostration/src/protobuf/enum"
+	"github.com/ACSG-64/Protobuf3_demostration/src/protobuf/simple"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 	"io/ioutil"
@@ -10,23 +12,22 @@ import (
 )
 
 func main() {
-	msg := doSimpleMessage()
+	simpleMsg := doSimpleMessage()
 
 	// Writing to disk
-	_ = writeToFile("message.bin", msg)
+	_ = writeToFile("message.bin", simpleMsg)
 	// Reading from disk
-	newMsg1 := simple_msg.SimpleMessage{}
-	_ = readFromFile("message.bin", &newMsg1)
-	fmt.Println("Message read from disk:", newMsg1)
+	newSimpleMsg1 := simple.SimpleMessage{}
+	_ = readFromFile("message.bin", &newSimpleMsg1)
+	fmt.Println("Message read from disk:", newSimpleMsg1)
 
 	// To JSON
-	json, _ := toJSON(msg)
+	json, _ := toJSON(simpleMsg)
 	fmt.Println("JSON format:", json)
 	// Parse from JSON
-	newMsg2 := simple_msg.SimpleMessage{}
-	_ = fromJSON(json, &newMsg2)
-	fmt.Println("Converted from JSON:", newMsg2)
-
+	newSimpleMsg2 := simple.SimpleMessage{}
+	_ = fromJSON(json, &newSimpleMsg2)
+	fmt.Println("Converted from JSON:", newSimpleMsg2)
 }
 
 func writeToFile(fileName string, pb proto.Message) error {
@@ -84,8 +85,8 @@ func fromJSON(jsonMessage string, pb proto.Message) error {
 	return nil
 }
 
-func doSimpleMessage() *simple_msg.SimpleMessage {
-	msg := simple_msg.SimpleMessage{
+func doSimpleMessage() *simple.SimpleMessage {
+	msg := simple.SimpleMessage{
 		Id:         1234,
 		IsSimple:   true,
 		Name:       "Basic message",
@@ -94,6 +95,46 @@ func doSimpleMessage() *simple_msg.SimpleMessage {
 
 	fmt.Println("Message:", msg)
 	fmt.Println("The ID of  the message is:", msg.GetId())
+
+	return &msg
+}
+
+func doEnumMessage() *enum.EnumMessage {
+	msg := enum.EnumMessage{
+		Id:           5678,
+		DayOfTheWeek: enum.DayOfTheWeek_WEDNESDAY, // Using enum field
+	}
+
+	fmt.Println("Message:", msg)
+	fmt.Println("The ID of  the message is:", msg.GetId())
+
+	return &msg
+}
+
+func doComplexMessage() *complex2.ComplexMessage {
+	msg := complex2.ComplexMessage{
+		OneDummy: &complex2.DummyMessage{
+			Id:   1,
+			Name: "A very first message!",
+		},
+		MultipleDummy: []*complex2.DummyMessage{
+			&complex2.DummyMessage{
+				Id:   2,
+				Name: "A first sub message!",
+			},
+			&complex2.DummyMessage{
+				Id:   3,
+				Name: "A second sub message!",
+			},
+			&complex2.DummyMessage{
+				Id:   4,
+				Name: "A third sub message!",
+			},
+		},
+	}
+
+	fmt.Println("Message:", msg)
+	fmt.Println("The ID of  the message is:", msg.GetOneDummy().GetId())
 
 	return &msg
 }
