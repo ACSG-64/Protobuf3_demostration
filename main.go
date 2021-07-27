@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	complex2 "github.com/ACSG-64/Protobuf3_demostration/src/protobuf/complex"
-	"github.com/ACSG-64/Protobuf3_demostration/src/protobuf/enum"
-	"github.com/ACSG-64/Protobuf3_demostration/src/protobuf/simple"
+	"github.com/ACSG-64/Protobuf3_demostration/src/protobuf/go-generated/complex_pb"
+	"github.com/ACSG-64/Protobuf3_demostration/src/protobuf/go-generated/enum_pb"
+	"github.com/ACSG-64/Protobuf3_demostration/src/protobuf/go-generated/simple_pb"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 	"io/ioutil"
@@ -17,7 +17,7 @@ func main() {
 	// Writing to disk
 	_ = writeToFile("message.bin", simpleMsg)
 	// Reading from disk
-	newSimpleMsg1 := simple.SimpleMessage{}
+	newSimpleMsg1 := simple_pb.SimpleMessage{}
 	_ = readFromFile("message.bin", &newSimpleMsg1)
 	fmt.Println("Message read from disk:", newSimpleMsg1)
 
@@ -25,7 +25,7 @@ func main() {
 	json, _ := toJSON(simpleMsg)
 	fmt.Println("JSON format:", json)
 	// Parse from JSON
-	newSimpleMsg2 := simple.SimpleMessage{}
+	newSimpleMsg2 := simple_pb.SimpleMessage{}
 	_ = fromJSON(json, &newSimpleMsg2)
 	fmt.Println("Converted from JSON:", newSimpleMsg2)
 }
@@ -85,8 +85,8 @@ func fromJSON(jsonMessage string, pb proto.Message) error {
 	return nil
 }
 
-func doSimpleMessage() *simple.SimpleMessage {
-	msg := simple.SimpleMessage{
+func doSimpleMessage() *simple_pb.SimpleMessage {
+	msg := simple_pb.SimpleMessage{
 		Id:         1234,
 		IsSimple:   true,
 		Name:       "Basic message",
@@ -99,10 +99,10 @@ func doSimpleMessage() *simple.SimpleMessage {
 	return &msg
 }
 
-func doEnumMessage() *enum.EnumMessage {
-	msg := enum.EnumMessage{
+func doEnumMessage() *enum_pb.EnumMessage {
+	msg := enum_pb.EnumMessage{
 		Id:           5678,
-		DayOfTheWeek: enum.DayOfTheWeek_WEDNESDAY, // Using enum field
+		DayOfTheWeek: enum_pb.DayOfTheWeek_WEDNESDAY, // Using enum field
 	}
 
 	fmt.Println("Message:", msg)
@@ -111,22 +111,22 @@ func doEnumMessage() *enum.EnumMessage {
 	return &msg
 }
 
-func doComplexMessage() *complex2.ComplexMessage {
-	msg := complex2.ComplexMessage{
-		OneDummy: &complex2.DummyMessage{
+func doComplexMessage() *complex_pb.ComplexMessage {
+	msg := complex_pb.ComplexMessage{
+		OneDummy: &complex_pb.DummyMessage{
 			Id:   1,
 			Name: "A very first message!",
 		},
-		MultipleDummy: []*complex2.DummyMessage{
-			&complex2.DummyMessage{
+		MultipleDummy: []*complex_pb.DummyMessage{
+			&complex_pb.DummyMessage{
 				Id:   2,
 				Name: "A first sub message!",
 			},
-			&complex2.DummyMessage{
+			&complex_pb.DummyMessage{
 				Id:   3,
 				Name: "A second sub message!",
 			},
-			&complex2.DummyMessage{
+			&complex_pb.DummyMessage{
 				Id:   4,
 				Name: "A third sub message!",
 			},
