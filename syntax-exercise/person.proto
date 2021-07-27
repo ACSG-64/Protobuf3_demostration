@@ -1,0 +1,37 @@
+syntax = "proto3"; // Using protobuf 3
+
+import "syntax-exercise/date.proto";
+
+package user.info;
+
+/*
+  Person is used to identify
+  users across our system
+ */
+
+message Person {
+  int32 age = 1;
+  string first_name = 2;
+  string last_name = 3;
+  bytes small_picture = 4;
+  bool profile_verified = 5;
+  float height = 6;
+  repeated string phone_numbers = 7;
+
+  enum EyeColor {
+    UNKNOWN_EYE_COLOR = 0;
+    EYE_GREEN = 1;
+    EYE_BROWN = 2;
+    EYE_BLUE = 3;
+  }
+  EyeColor eye_color = 8;
+
+  message Address {
+    string direction = 1;
+    string postal_code = 2;
+    string city = 3;
+    string country = 4;
+  }
+  Address address = 9;
+  date.Date birthday = 10;
+}
